@@ -13,7 +13,7 @@ st.caption("Manage your customers, contacts, and insights effortlessly.")
 
 
 menu = ["Home","Add Contact", "View Contacts", "Update Contact", "Delete Contact","Dashboard"]
-choice = st.sidebar.selectbox("Select Action", menu)
+choice = st.sidebar.selectbox("Select Action", menu, index=0)
 
 # Validation Functions
 def is_valid_email(email):
@@ -26,6 +26,7 @@ def is_valid_phone(phone):
 #Home
 if choice == "Home":
     st.subheader("👋 Welcome to Customer CRM")
+    st.image("https://cdn-icons-png.flaticon.com/512/906/906175.png", width=100)
     st.markdown("""
     This is a simple yet powerful Contact Management System for small businesses or freelancers.
     
@@ -146,24 +147,35 @@ elif choice == "Update Contact":
 
 
 
-# Delete Contact
+# 🚮 Delete Contact
 elif choice == "Delete Contact":
-    st.subheader("🗑️ Delete Contact")
+    st.subheader("🗑️ Delete Existing Contact")
 
     data = get_all_contacts()
-    df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Address", "Email", "Phone"])
-    
+    df = pd.DataFrame(data, columns=[
+        "ID", "First Name", "Last Name", "Address", "Email", "Phone",
+        "Category", "Notes", "Created At", "Last Interaction"
+    ])
+
     if not df.empty:
         selected_id = st.selectbox("Select Contact ID to Delete", df["ID"])
-        
-        if st.button("Delete"):
+        contact = df[df["ID"] == selected_id].iloc[0]
+
+        st.write("**Selected Contact:**")
+        st.write(f"**Name:** {contact['First Name']} {contact['Last Name']}")
+        st.write(f"**Email:** {contact['Email']}  |  **Phone:** {contact['Phone']}")
+        st.write(f"**Address:** {contact['Address']}")
+        st.write(f"**Category:** {contact['Category']}  |  **Last Interaction:** {contact['Last Interaction']}")
+
+        if st.button("Delete Now"):
             try:
                 delete_contact(selected_id)
-                st.success("🗑️ Contact deleted successfully!")
+                st.success("✅ Contact deleted successfully!")
             except Exception as e:
                 st.error(f"❌ Error: {e}")
     else:
         st.info("No contacts available to delete.")
+
 
 #Dashboard
 elif choice == "Dashboard":
