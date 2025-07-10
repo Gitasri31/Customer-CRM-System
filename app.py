@@ -27,6 +27,7 @@ def is_valid_phone(phone):
 if choice == "Home":
     st.subheader("👋 Welcome to Customer CRM")
     st.image("https://cdn-icons-png.flaticon.com/512/906/906175.png", width=100)
+ 
     st.markdown("""
     This is a simple yet powerful Contact Management System for small businesses or freelancers.
     
