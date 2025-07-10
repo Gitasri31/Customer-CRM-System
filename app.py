@@ -6,7 +6,7 @@ import pandas as pd
 
 create_table()  # make sure the table is created
 
-st.set_page_config(page_title="Customer CRM", layout="centered")
+st.set_page_config(page_title="Customer CRM",page_icon="📒", layout="centered")
 
 st.title("📘 Customer CRM System")
 st.caption("Manage your customers, contacts, and insights effortlessly.")
